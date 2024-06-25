@@ -13,7 +13,7 @@ readonly class Helper
   /**
    * Freescout note type.
    */
-  private const NOTE_TYPE = 3;
+    private const NOTE_TYPE = 3;
 
   /**
    * Helper constructor for Freescout.
