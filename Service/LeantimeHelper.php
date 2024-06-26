@@ -27,7 +27,7 @@ final class LeantimeHelper
   /**
    * Path to the ticket (without the id)
    */
-    private const LEANTIME_TICKET_PATH = '/tickets/showKanban#/tickets/showTicket/';
+    private const LEANTIME_TICKET_PATH = '/#/tickets/showTicket/';
 
   /**
    * Use Leantime API to create the leantime ticket.
