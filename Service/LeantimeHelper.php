@@ -114,7 +114,9 @@ final class LeantimeHelper
             return $e->getResponse();
         }
 
-        return json_decode($response->getBody()->getContents())->result[0];
+        $contents = json_decode($response->getBody()->getContents(), true);
+
+        return $contents['result'][0];
     }
 
   /**
