@@ -34,15 +34,19 @@ final class LeantimeHelper
    * Use Leantime API to create the leantime ticket.
    *
    * @param Conversation $conversation
+   *   A freescout conversation.
    * @param Thread $thread
+   *   A freescout Thread.
    * @param String $customerName
+   *   THe name of the customer.
    *
-   * @return string|null
+   * @return ResponseInterface|string|null
+   *   Id of the created Leantime ticket or an error response.
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Throwable
    */
-    public function sendToLeantime(Conversation $conversation, Thread $thread, string $customerName): ?string
-    {
+    public function sendToLeantime(Conversation $conversation, Thread $thread, string $customerName): ResponseInterface|string|null {
         $conv = $conversation->getOriginal();
 
         $leantimeId = $this->addTicket([
@@ -64,10 +68,12 @@ final class LeantimeHelper
    *
    * @param array $values
    *
-   * @return string
+   * @return ResponseInterface|string|null
+   *   Id of the created Leantime ticket or an error response.
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-    public function addTicket(array $values): string
+    public function addTicket(array $values): ResponseInterface|string|null
     {
         return $this->post('leantime.rpc.tickets.addTicket', [
         'values' => $values,
@@ -82,11 +88,12 @@ final class LeantimeHelper
    * @param array $params
    *   Required params for the method.
    *
-   * @return ResponseInterface|string
+   * @return ResponseInterface|string|null
    *   Id of the created Leantime ticket or an error response.
+   *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-    private function post(string $method, array $params = []): ResponseInterface|string
+    private function post(string $method, array $params = []): ResponseInterface|string|null
     {
         $leantimeApiKey = \config('itkissuecreate.leantimeApiKey');
 
