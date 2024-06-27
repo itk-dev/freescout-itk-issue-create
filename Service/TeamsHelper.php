@@ -59,7 +59,7 @@ class TeamsHelper
    *   The original conversation.
    * @param string $customerName
    *   The customer name.
-   * @param string $leantimeTicketUrl
+   * @param string|null $leantimeTicketUrl
    *   The URL to a Leantime ticket.
    * @param bool $validLeantimeUrl
    *   Whether the leantimeUrl is valid.
@@ -69,7 +69,7 @@ class TeamsHelper
     private function getBody(
         array $conv,
         string $customerName,
-        string $leantimeTicketUrl,
+        ?string $leantimeTicketUrl,
         bool $validLeantimeUrl
     ): array
     {
