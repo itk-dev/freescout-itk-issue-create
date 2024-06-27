@@ -39,13 +39,16 @@ readonly class Helper
     {
         $conversation = Conversation::all()->find($conversationId);
 
+        $validLeantimeUrl = filter_var($leantimeTicketUrl, FILTER_VALIDATE_URL);
+
         $this->thread->create(
             $conversation,
             self::NOTE_TYPE,
             $this->createHtmlDescription(
                 $conversation->getOriginal(),
                 $leantimeTicketUrl
-            )
+            ),
+            $validLeantimeUrl
         );
     }
 
@@ -56,18 +59,21 @@ readonly class Helper
    *   The freescout conversation.
    * @param string $leantimeTicketUrl
    *   A URL to leantime ticket.
+   * @param bool $validLeantimeUrl
+   *   Whether the leantime url is valid.
    *
    * @return string
    *   Some rendered html for a Freescout note
    * @throws \Throwable
    */
-    private function createHtmlDescription(array $conv, string $leantimeTicketUrl): string
+    private function createHtmlDescription(array $conv, string $leantimeTicketUrl, bool $validLeantimeUrl): string
     {
         return view(
             'itkissuecreate::freescoutNote',
             compact(
                 'conv',
-                'leantimeTicketUrl'
+                'leantimeTicketUrl',
+                'validLeantimeUrl'
             )
         )->render();
     }

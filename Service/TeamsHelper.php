@@ -32,6 +32,8 @@ class TeamsHelper
             return;
         }
 
+        $validLeantimeUrl = filter_var($leantimeTicketUrl, FILTER_VALIDATE_URL);
+
         $conv = $conversation->getOriginal();
 
         $client = new Client([
@@ -43,7 +45,7 @@ class TeamsHelper
             'timeout' => config('app.curl_timeout'),
             'connect_timeout' => config('app.curl_timeout'),
             'proxy' => config('app.proxy'),
-            'body' => json_encode($this->getBody($conv, $customerName, $leantimeTicketUrl))
+            'body' => json_encode($this->getBody($conv, $customerName, $leantimeTicketUrl, $validLeantimeUrl))
             ]);
         } catch (Exception $e) {
             \Helper::logException($e);
@@ -59,12 +61,40 @@ class TeamsHelper
    *   The customer name.
    * @param string $leantimeTicketUrl
    *   The URL to a Leantime ticket.
+   * @param bool $validLeantimeUrl
+   *   Whether the leantimeUrl is valid.
    *
    * @return array
    */
-    private function getBody(array $conv, string $customerName, string $leantimeTicketUrl): array
+    private function getBody(
+        array $conv,
+        string $customerName,
+        string $leantimeTicketUrl,
+        bool $validLeantimeUrl
+    ): array
     {
+
         $freescoutPath = config('app.url');
+
+        if ($validLeantimeUrl) {
+            $rightCol = [
+            "type" => "ActionSet",
+            "actions" => [
+              [
+                "type" => "Action.OpenUrl",
+                "title" => "Open in Leantime",
+                "url" => $leantimeTicketUrl
+              ],
+            ],
+            ];
+        } else {
+            $rightCol = [
+            "type" => "TextBlock",
+            "text" => "Kunne ikke skabe Leantime URL",
+            "wrap" => true,
+            "spacing" => "None",
+            ];
+        }
 
         return [
         "type" => "message",
@@ -144,16 +174,7 @@ class TeamsHelper
                     "type" => "Column",
                     "width" => "stretch",
                     "items" => [
-                      [
-                        "type" => "ActionSet",
-                        "actions" => [
-                          [
-                            "type" => "Action.OpenUrl",
-                            "title" => "Open in Leantime",
-                            "url" => $leantimeTicketUrl
-                          ],
-                        ],
-                      ],
+                      $rightCol,
                     ],
                   ],
                 ],
