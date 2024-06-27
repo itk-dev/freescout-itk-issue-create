@@ -57,7 +57,7 @@ readonly class Helper
    *
    * @param array $conv
    *   The freescout conversation.
-   * @param string $leantimeTicketUrl
+   * @param string|null $leantimeTicketUrl
    *   A URL to leantime ticket.
    * @param bool $validLeantimeUrl
    *   Whether the leantime url is valid.
@@ -66,7 +66,7 @@ readonly class Helper
    *   Some rendered html for a Freescout note
    * @throws \Throwable
    */
-    private function createHtmlDescription(array $conv, string $leantimeTicketUrl, bool $validLeantimeUrl): string
+    private function createHtmlDescription(array $conv, ?string $leantimeTicketUrl, bool $validLeantimeUrl): string
     {
         return view(
             'itkissuecreate::freescoutNote',
