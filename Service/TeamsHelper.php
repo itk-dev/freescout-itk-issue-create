@@ -19,12 +19,12 @@ class TeamsHelper
    *   The freescout conversation.
    * @param string $customerName
    *   The customers name.
-   * @param string $leantimeTicketUrl
+   * @param string|null $leantimeTicketUrl
    *   THe URL to a leantime ticket.
    *
    * @return void
    */
-    public function sendToTeams(Conversation $conversation, string $customerName, string $leantimeTicketUrl): void
+    public function sendToTeams(Conversation $conversation, string $customerName, ?string $leantimeTicketUrl): void
     {
         $teamsWebHook = \config('itkissuecreate.teamsWebHook');
 

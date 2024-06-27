@@ -29,13 +29,13 @@ readonly class Helper
    *
    * @param int $conversationId
    *   The id of the conversation to add the note to.
-   * @param string $leantimeTicketUrl
+   * @param string|null $leantimeTicketUrl
    *   The URL of the Leantime ticket.
    *
    * @return void
    * @throws \Throwable
    */
-    public function addLeantimeReference(int $conversationId, string $leantimeTicketUrl): void
+    public function addLeantimeReference(int $conversationId, ?string $leantimeTicketUrl): void
     {
         $conversation = Conversation::all()->find($conversationId);
 
