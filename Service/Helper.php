@@ -46,9 +46,9 @@ readonly class Helper
             self::NOTE_TYPE,
             $this->createHtmlDescription(
                 $conversation->getOriginal(),
-                $leantimeTicketUrl
+                $leantimeTicketUrl,
+                $validLeantimeUrl
             ),
-            $validLeantimeUrl
         );
     }
 

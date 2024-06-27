@@ -4,6 +4,7 @@ namespace Modules\ItkIssueCreate\Service;
 
 use Exception;
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Conversation;
 use App\Thread;
@@ -81,11 +82,11 @@ final class LeantimeHelper
    * @param array $params
    *   Required params for the method.
    *
-   * @return string
+   * @return ResponseInterface|string
    *   Id of the created Leantime ticket or an error response.
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-    private function post(string $method, array $params = []): string
+    private function post(string $method, array $params = []): ResponseInterface|string
     {
         $leantimeApiKey = \config('itkissuecreate.leantimeApiKey');
 
