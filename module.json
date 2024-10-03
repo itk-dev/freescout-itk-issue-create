@@ -18,5 +18,6 @@
     "files": [
         "start.php"
     ],
-    "requires": []
+    "requires": [],
+    "requiredModules": {"itkprometheus": "1.0.0"}
 }
