@@ -19,9 +19,9 @@ class TeamsHelper
    * @param \Modules\ItkPrometheus\Service\PrometheusService $prometheusService
    *   The prometheus service.
    */
-  public function __construct(private readonly PrometheusService $prometheusService)
-  {
-  }
+    public function __construct(private readonly PrometheusService $prometheusService)
+    {
+    }
 
   /**
    * Use a Teams webhook to create a message for teams.

@@ -57,7 +57,12 @@ final class LeantimeHelper
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Throwable
    */
-    public function sendToLeantime(Conversation $conversation, Thread $thread, string $customerName): ResponseInterface|string|null {
+    public function sendToLeantime(
+        Conversation $conversation,
+        Thread $thread,
+        string $customerName
+    ): ResponseInterface|string|null
+    {
         $conv = $conversation->getOriginal();
 
         $leantimeId = $this->addTicket([
