@@ -70,9 +70,8 @@ class TeamsHelper
 
             $labels = [
               'module' => 'itk_issue_create',
-              'service' => 'TeamsHelper',
               'method' => 'sendToTeams',
-              'exception' => $e->getMessage(),
+              'type' => 'exception',
               'code' => $e->getCode(),
             ];
 

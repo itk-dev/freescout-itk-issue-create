@@ -143,9 +143,8 @@ final class LeantimeHelper
 
             $labels = [
               'module' => 'itk_issue_create',
-              'service' => 'LeantimeHelper',
               'method' => 'post',
-              'exception' => $e->getMessage(),
+              'type' => 'exception',
               'code' => $e->getCode(),
             ];
 
