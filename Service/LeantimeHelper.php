@@ -4,6 +4,7 @@ namespace Modules\ItkIssueCreate\Service;
 
 use Exception;
 use GuzzleHttp\Client;
+use Modules\ItkPrometheus\Service\PrometheusService;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Conversation;
@@ -31,6 +32,16 @@ final class LeantimeHelper
     private const LEANTIME_TICKET_PATH = '/#/tickets/showTicket/';
 
   /**
+   * Helper constructor for Freescout leantime connection.
+   *
+   * @param \Modules\ItkPrometheus\Service\PrometheusService $prometheusService
+   *   The prometheus service.
+   */
+    public function __construct(private readonly PrometheusService $prometheusService)
+    {
+    }
+
+  /**
    * Use Leantime API to create the leantime ticket.
    *
    * @param Conversation $conversation
@@ -46,7 +57,12 @@ final class LeantimeHelper
    * @throws \GuzzleHttp\Exception\GuzzleException
    * @throws \Throwable
    */
-    public function sendToLeantime(Conversation $conversation, Thread $thread, string $customerName): ResponseInterface|string|null {
+    public function sendToLeantime(
+        Conversation $conversation,
+        Thread $thread,
+        string $customerName
+    ): ResponseInterface|string|null
+    {
         $conv = $conversation->getOriginal();
 
         $leantimeId = $this->addTicket([
@@ -91,7 +107,7 @@ final class LeantimeHelper
    * @return ResponseInterface|string|null
    *   Id of the created Leantime ticket or an error response.
    *
-   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \GuzzleHttp\Exception\GuzzleException|\Prometheus\Exception\MetricsRegistrationException
    */
     private function post(string $method, array $params = []): ResponseInterface|string|null
     {
@@ -118,6 +134,21 @@ final class LeantimeHelper
             ]);
         } catch (Exception $e) {
             \Helper::logException($e);
+
+            $counter = [
+              'name_space' => 'leantime_helper',
+              'name' => 'post_exception',
+              'help' => 'Increases when posting to leantime fails'
+            ];
+
+            $labels = [
+              'module' => 'itk_issue_create',
+              'method' => 'post',
+              'type' => 'exception',
+              'code' => $e->getCode(),
+            ];
+
+            $this->prometheusService->incCounterBy($counter, $labels);
 
             return $e->getResponse();
         }
