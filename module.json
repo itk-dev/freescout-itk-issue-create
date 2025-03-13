@@ -19,5 +19,8 @@
         "start.php"
     ],
     "requires": [],
-    "requiredModules": {"itkprometheus": "1.0.0"}
+    "requiredModules": {
+      "itkprometheus": "1.0.0",
+      "itkleantimesync": "1.0.0"
+    }
 }

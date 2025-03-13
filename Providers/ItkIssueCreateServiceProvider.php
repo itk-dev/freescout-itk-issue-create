@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\ItkIssueCreate\Service\Helper;
 use Modules\ItkIssueCreate\Service\TeamsHelper;
-use Modules\ItkIssueCreate\Service\LeantimeHelper;
+use Modules\ItkLeantimeSync\Service\LeantimeHelper;
 use TorMorten\Eventy\Facades\Events as Eventy;
 
 define('ITK_ISSUE_CREATE_MODULE', 'itkissuecreate');
