@@ -4,6 +4,10 @@ namespace Modules\ItkIssueCreate\Service;
 
 use App\Thread;
 use App\Conversation;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Modules\CustomFields\Entities\ConversationCustomField;
+use Modules\CustomFields\Entities\CustomField;
 
 /**
  * Helper for freescout related stuff.
@@ -35,21 +39,33 @@ readonly class Helper
    * @return void
    * @throws \Throwable
    */
-    public function addLeantimeReference(int $conversationId, ?string $leantimeTicketUrl): void
+    public function addLeantimeReference(int $conversationId, ?array $leantimeResult): void
     {
         $conversation = Conversation::all()->find($conversationId);
 
-        $validLeantimeUrl = filter_var($leantimeTicketUrl, FILTER_VALIDATE_URL);
+        $validLeantimeUrl = filter_var($leantimeResult['url'], FILTER_VALIDATE_URL);
 
         $this->thread->create(
             $conversation,
             self::NOTE_TYPE,
             $this->createHtmlDescription(
-                $conversation->getOriginal(),
-                $leantimeTicketUrl,
-                $validLeantimeUrl
-            ),
+              $conversation->getOriginal(),
+              $leantimeResult['url'],
+              $validLeantimeUrl
+            )
         );
+        try {
+          $customField = CustomField::where('name', '=', 'Leantime issue')->firstOrFail();
+          $conversationCustomField = new ConversationCustomField();
+          $conversationCustomField->setAttribute('conversation_id', $conversationId);
+          $conversationCustomField->setAttribute('custom_field_id', $customField->getAttribute('id'));
+          $conversationCustomField->setAttribute('value', $leantimeResult['id']);
+          $conversationCustomField->save();
+        }
+        catch (Exception $exception) {
+          Log::error(__FUNCTION__. ': ' . $exception->getMessage());
+        }
+
     }
 
   /**

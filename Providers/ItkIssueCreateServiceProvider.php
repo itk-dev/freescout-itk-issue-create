@@ -50,16 +50,16 @@ class ItkIssueCreateServiceProvider extends ServiceProvider
                 }
 
                 // Create Leantime ticket.
-                $leantimeTicketUrl = app(LeantimeHelper::class)
+                $leantimeResult = app(LeantimeHelper::class)
                 ->sendToLeantime($conversation, $thread, $this->getCustomerName($customer));
 
                 // Create teams message.
                 app(TeamsHelper::class)
-                ->sendToTeams($conversation, $this->getCustomerName($customer), $leantimeTicketUrl);
+                ->sendToTeams($conversation, $this->getCustomerName($customer), $leantimeResult['url']);
 
-                // Create Freescout note with a Leantime reference.
+                // Create Freescout note with a Leantime reference and add ticket Id.
                 app(Helper::class)
-                ->addLeantimeReference($conversation->getOriginal()['id'], $leantimeTicketUrl);
+                ->addLeantimeReference($conversation->getOriginal()['id'], $leantimeResult);
             },
             20,
             3
