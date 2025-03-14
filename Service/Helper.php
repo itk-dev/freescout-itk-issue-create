@@ -49,23 +49,21 @@ readonly class Helper
             $conversation,
             self::NOTE_TYPE,
             $this->createHtmlDescription(
-              $conversation->getOriginal(),
-              $leantimeResult['url'],
-              $validLeantimeUrl
+                $conversation->getOriginal(),
+                $leantimeResult['url'],
+                $validLeantimeUrl
             )
         );
         try {
-          $customField = CustomField::where('name', '=', 'Leantime issue')->firstOrFail();
-          $conversationCustomField = new ConversationCustomField();
-          $conversationCustomField->setAttribute('conversation_id', $conversationId);
-          $conversationCustomField->setAttribute('custom_field_id', $customField->getAttribute('id'));
-          $conversationCustomField->setAttribute('value', $leantimeResult['id']);
-          $conversationCustomField->save();
+            $customField = CustomField::where('name', '=', 'Leantime issue')->firstOrFail();
+            $conversationCustomField = new ConversationCustomField();
+            $conversationCustomField->setAttribute('conversation_id', $conversationId);
+            $conversationCustomField->setAttribute('custom_field_id', $customField->getAttribute('id'));
+            $conversationCustomField->setAttribute('value', $leantimeResult['id']);
+            $conversationCustomField->save();
+        } catch (Exception $exception) {
+            Log::error(__FUNCTION__. ': ' . $exception->getMessage());
         }
-        catch (Exception $exception) {
-          Log::error(__FUNCTION__. ': ' . $exception->getMessage());
-        }
-
     }
 
   /**
