@@ -19,16 +19,6 @@ A few variables needs to be set in Freescouts .env file
 ```
 ### Teams webhook ###
 TEAMS_WEB_HOOK=
-
-### Leantime ###
-# The Leantime scheme & domain name
-LEANTIME_URL=https://example.com
-
-# A Leantime API key
-LEANTIME_API_KEY=
-
-# The project key of the project to add To-do's to.
-LEANTIME_PROJECT_KEY=
 ```
 
 ### Finish
