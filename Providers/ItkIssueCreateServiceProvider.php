@@ -70,11 +70,11 @@ class ItkIssueCreateServiceProvider extends ServiceProvider
             function (Conversation $conversation, Thread $thread) {
               // Create Leantime ticket.
               $leantimeResult = app(LeantimeHelper::class)
-              ->sendToLeantime($conversation, $thread, $thread->getCreatedBy()->getFullName());
+                ->sendToLeantime($conversation, $thread, $thread->getCreatedBy()->getFullName());
 
               // Create Freescout note with a Leantime reference and add ticket Id.
               app(Helper::class)
-              ->addLeantimeReference($conversation->getOriginal()['id'], $leantimeResult);
+                ->addLeantimeReference($conversation->getOriginal()['id'], $leantimeResult);
             },
             20,
             3
