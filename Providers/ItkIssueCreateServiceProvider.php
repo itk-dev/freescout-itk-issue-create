@@ -66,18 +66,18 @@ class ItkIssueCreateServiceProvider extends ServiceProvider
         );
 
         Eventy::addAction(
-          'conversation.created_by_user_can_undo',
-          function (Conversation $conversation, Thread $thread) {
-            // Create Leantime ticket.
-            $leantimeResult = app(LeantimeHelper::class)
+            'conversation.created_by_user_can_undo',
+            function (Conversation $conversation, Thread $thread) {
+              // Create Leantime ticket.
+              $leantimeResult = app(LeantimeHelper::class)
               ->sendToLeantime($conversation, $thread, $thread->getCreatedBy()->getFullName());
 
-            // Create Freescout note with a Leantime reference and add ticket Id.
-            app(Helper::class)
+              // Create Freescout note with a Leantime reference and add ticket Id.
+              app(Helper::class)
               ->addLeantimeReference($conversation->getOriginal()['id'], $leantimeResult);
-          },
-          20,
-          3
+            },
+            20,
+            3
         );
     }
 
