@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added leantime issue creation when editor creates a freescout ticket.
+
 ### Changed
 
 - Removed leantime helper and related config.
