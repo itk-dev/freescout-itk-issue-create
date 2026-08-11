@@ -9,5 +9,5 @@
 </p>
 <hr>
 <p>
-    <a href="{{$freescoutUrl}}" class="btn-primary">Åben i Freescout</a>
+    <a href="{{$freescoutUrl}}" class="btn btn-primary">Åben i Freescout</a>
 </p>
