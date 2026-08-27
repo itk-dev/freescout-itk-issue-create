@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Added `btn` class to the Freescout link in the Leantime description.
 - Removed leantime helper and related config.
 
 ## [1.0.0]
